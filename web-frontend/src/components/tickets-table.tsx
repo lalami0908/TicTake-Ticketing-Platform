@@ -1,26 +1,28 @@
-import { useMemo } from 'react'
-import { useTable, useFilters, useSortBy, usePagination } from 'react-table'
-import type { TableOptions } from 'react-table'
-import BTable from 'react-bootstrap/Table'
-import { SortAlphaDown, SortAlphaUp } from 'react-bootstrap-icons'
-import DefaultColumnFilter from '../react-table/Filters/DefaultColumnFilter'
-import { Event } from '../Types/event'
-import Button from 'react-bootstrap/Button'
-import { TicketType } from '../Types/ticket'
+import { useMemo } from 'react';
+import { useTable, useFilters, useSortBy, usePagination } from 'react-table';
+import type { TableOptions } from 'react-table';
+import BTable from 'react-bootstrap/Table';
+import { SortAlphaDown, SortAlphaUp } from 'react-bootstrap-icons';
+import DefaultColumnFilter from '../react-table/Filters/default-column-filter';
+import Button from 'react-bootstrap/Button';
+import { TicketType } from '../Types/ticket';
 
-export default function EventsTable({ columns, data }: TableOptions<TicketType>): JSX.Element {
+export default function EventsTable({
+  columns,
+  data,
+}: TableOptions<TicketType>): JSX.Element {
   const defaultColumn = useMemo(
     () => ({
       Filter: DefaultColumnFilter,
     }),
     [],
-  )
+  );
 
-  const { 
-    getTableProps, 
-    getTableBodyProps, 
-    headerGroups, 
-    page, 
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
     prepareRow,
     canPreviousPage,
     canNextPage,
@@ -30,8 +32,7 @@ export default function EventsTable({ columns, data }: TableOptions<TicketType>)
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex,pageSize }
-    
+    state: { pageIndex, pageSize },
   } = useTable<TicketType>(
     {
       columns,
@@ -39,22 +40,30 @@ export default function EventsTable({ columns, data }: TableOptions<TicketType>)
       defaultColumn,
       isMultiSortEvent: () => true,
     },
-    
+
     useFilters,
     useSortBy,
     usePagination,
-  )
+  );
 
   return (
     <>
-      <BTable striped bordered hover size="sm" {...getTableProps({ className: 'table-fit' })}>
+      <BTable
+        striped
+        bordered
+        hover
+        size="sm"
+        {...getTableProps({ className: 'table-fit' })}
+      >
         <thead className="sticky-top" style={{ backgroundColor: 'white' }}>
           {headerGroups.map((headerGroup) => {
-            const { key: headerGroupKey, ...getHeaderGroupProps } = headerGroup.getHeaderGroupProps()
+            const { key: headerGroupKey, ...getHeaderGroupProps } =
+              headerGroup.getHeaderGroupProps();
             return (
               <tr key={headerGroupKey} {...getHeaderGroupProps}>
                 {headerGroup.headers.map((column) => {
-                  const { key: headerKey, ...getHeaderProps } = column.getHeaderProps()
+                  const { key: headerKey, ...getHeaderProps } =
+                    column.getHeaderProps();
                   return (
                     <th key={headerKey} {...getHeaderProps}>
                       <div {...column.getSortByToggleProps()}>
@@ -71,33 +80,37 @@ export default function EventsTable({ columns, data }: TableOptions<TicketType>)
                           )}
                         </span>
                       </div>
-                      <div>{column.canFilter ? column.render('Filter') : null}</div>
+                      <div>
+                        {column.canFilter ? column.render('Filter') : null}
+                      </div>
                     </th>
-                  )
+                  );
                 })}
               </tr>
-            )
+            );
           })}
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, idx) => {
-            prepareRow(row)
-          
-            const { key: rowKey, ...getRowProps } = row.getRowProps()
+            prepareRow(row);
+
+            const { key: rowKey, ...getRowProps } = row.getRowProps();
             return (
               <tr key={rowKey} {...getRowProps}>
                 {row.cells.map((cell) => {
-                  const { key: cellKey, ...getCellProps } = cell.getCellProps({ style: { color: 'inherit' } })
+                  const { key: cellKey, ...getCellProps } = cell.getCellProps({
+                    style: { color: 'inherit' },
+                  });
                   return (
                     <td key={cellKey} {...getCellProps}>
-                      <div style={{ textAlign: "center" }}>
+                      <div style={{ textAlign: 'center' }}>
                         {cell.render('Cell')}
                       </div>
                     </td>
-                  )
+                  );
                 })}
               </tr>
-            )
+            );
           })}
         </tbody>
       </BTable>
@@ -114,11 +127,10 @@ export default function EventsTable({ columns, data }: TableOptions<TicketType>)
         <Button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           {'>>'}
         </Button>{' '}
-      
         <span>
           Page
           <strong>
-            {pageIndex + 1} of {pageOptions.length}  
+            {pageIndex + 1} of {pageOptions.length}
           </strong>{' '}
         </span>
         <span>
@@ -126,20 +138,20 @@ export default function EventsTable({ columns, data }: TableOptions<TicketType>)
           <input
             type="number"
             defaultValue={pageIndex + 1}
-            onChange={e => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0
-              gotoPage(page)
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
             }}
             style={{ width: '100px' }}
           />
         </span>{' '}
         <select
           value={pageSize}
-          onChange={e => {
-            setPageSize(Number(e.target.value))
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
           }}
         >
-          {[10, 20, 30, 40, 50].map(pageSize => (
+          {[10, 20, 30, 40, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
@@ -147,5 +159,5 @@ export default function EventsTable({ columns, data }: TableOptions<TicketType>)
         </select>
       </div>
     </>
-  )
+  );
 }

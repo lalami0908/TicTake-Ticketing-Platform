@@ -1,10 +1,10 @@
-import Form from 'react-bootstrap/Form'
-import type { FilterProps } from 'react-table'
+import Form from 'react-bootstrap/Form';
+import type { FilterProps } from 'react-table';
 
 export default function defaultColumnFilter<T extends Record<string, unknown>>({
   column: { filterValue, preFilteredRows, setFilter, id },
 }: FilterProps<T>): JSX.Element {
-  const count = preFilteredRows.length
+  const count = preFilteredRows.length;
 
   return (
     <Form.Control
@@ -12,9 +12,9 @@ export default function defaultColumnFilter<T extends Record<string, unknown>>({
       placeholder={`Search ${count} records...`}
       value={filterValue || ''}
       onChange={(e) => {
-        setFilter(e.target.value || undefined) 
+        setFilter(e.target.value || undefined);
       }}
       data-cy={`${id}-filter-input`}
     />
-  )
+  );
 }

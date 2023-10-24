@@ -1,64 +1,50 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import StarIcon from '@mui/icons-material/StarBorder';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
-import { history } from '../index'
 import BuyTicketModal from '../components/buy-ticket-modal';
-import Modal from '@mui/material/Modal';
-import  { getAllActivities } from '../axios/index'
+import { getAllActivities } from '../axios/index';
 import { ActivityType } from '../Types/ticket';
-import LoadingSpin from "react-loading-spin";
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '} {'tictake@'}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../components/copy-right-footer';
 
 function SearchForActivitiesContent() {
   const [activities, setActivities] = React.useState<ActivityType[]>([]);
-  const [refreshCnt, setRefreshCnt] = React.useState(0)
-  React.useEffect( () => {
-    getAllActivities(setActivities)
+  const [refreshCnt, setRefreshCnt] = React.useState(0);
+  React.useEffect(() => {
+    getAllActivities(setActivities);
   }, []);
 
-  React.useEffect( () => {
-    getAllActivities(setActivities)
-    console.log(refreshCnt)
+  React.useEffect(() => {
+    getAllActivities(setActivities);
+    console.log(refreshCnt);
   }, [refreshCnt]);
-
 
   return (
     <React.Fragment>
-       
-      <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
+      <GlobalStyles
+        styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }}
+      />
       <CssBaseline />
-      {/* Hero unit */}
-      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 0, pb: 6 }}>
+      <Container
+        disableGutters
+        maxWidth="sm"
+        component="main"
+        sx={{ pt: 0, pb: 6 }}
+      >
         <Typography
           component="h2"
           variant="h3"
           align="center"
           color="text.primary"
           gutterBottom
-          style={{ "marginTop": "50px" }}
+          style={{ marginTop: '50px' }}
         >
           Tonight,
         </Typography>
@@ -71,26 +57,33 @@ function SearchForActivitiesContent() {
         >
           I want something special
         </Typography>
-        <Typography variant="h5" align="center" color="text.secondary" component="p">
-           Do you feel bored with life?
+        <Typography
+          variant="h5"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          Do you feel bored with life?
         </Typography>
-        <Typography variant="h5" align="center" color="text.secondary" component="p">
-           Quickly buy activity tickets and have fun maybe!
+        <Typography
+          variant="h5"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          Quickly buy activity tickets and have fun maybe!
         </Typography>
       </Container>
 
-       
-
-     
       <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignItems="flex-end"
-            // style={{"marginTop": "30px"}}
-          >
-          {activities.map((activitiy, idx) => 
-            
-            // Enterprise card is full width at sm breakpoint
-            (<Grid
-            style={{"height": "400px"}}
+        <Grid
+          container
+          spacing={5}
+          alignItems="flex-end"
+        >
+          {activities.map((activitiy, idx) => (
+            <Grid
+              style={{ height: '400px' }}
               item
               key={idx}
               xs={12}
@@ -99,11 +92,9 @@ function SearchForActivitiesContent() {
             >
               <Card>
                 <CardHeader
-                  style={{"backgroundColor": "white", "color": "black"}}
+                  style={{ backgroundColor: 'white', color: 'black' }}
                   title={activitiy.activity_name}
-                //   subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
-                //   action={tier.title === 'Pro' ? <StarIcon /> : null}
                   subheaderTypographyProps={{
                     align: 'center',
                   }}
@@ -123,43 +114,46 @@ function SearchForActivitiesContent() {
                       mb: 2,
                     }}
                   >
-                    <Typography component="h2" variant="h3" color="text.primary">
+                    <Typography
+                      component="h2"
+                      variant="h3"
+                      color="text.primary"
+                    >
                       ${activitiy.price}
                     </Typography>
-                    <Typography variant="h6" color="text.secondary"
-                     style={{"marginLeft": "10px"}}
+                    <Typography
+                      variant="h6"
+                      color="text.secondary"
+                      style={{ marginLeft: '10px' }}
                     >
-                       NTD
+                      NTD
                     </Typography>
                   </Box>
-                  <ul style={{"textAlign": "center"}}>
+                  <ul style={{ textAlign: 'center' }}>
                     <li>活動資訊：{activitiy.activity_info}</li>
-                    <li>剩餘名額：{`${activitiy.remaining_inventory} / ${activitiy.total_inventory}`}</li>
-
-                    {/* <li>創立時間：{activitiy.created_time.toString}</li> */}
+                    <li>
+                      剩餘名額：
+                      {`${activitiy.remaining_inventory} / ${activitiy.total_inventory}`}
+                    </li>
                   </ul>
-
-                  
-
-                   
                 </CardContent>
                 <CardActions>
-                  <BuyTicketModal 
-                    activity_id={activitiy.activity_id} 
+                  <BuyTicketModal
+                    activity_id={activitiy.activity_id}
                     activity_name={activitiy.activity_name}
                     activity_remaining_inventory={activitiy.remaining_inventory}
                     refreshCnt={refreshCnt}
-                    setRefreshCnt={setRefreshCnt}></BuyTicketModal>                  
+                    setRefreshCnt={setRefreshCnt}
+                  ></BuyTicketModal>
                 </CardActions>
               </Card>
-            </Grid>)
-          )}
+            </Grid>
+          ))}
         </Grid>
       </Container>
 
-      {/* Footer */}
       <Container
-        style={{"marginTop": "130px"}}
+        style={{ marginTop: '130px' }}
         maxWidth="md"
         component="footer"
         sx={{
@@ -171,7 +165,6 @@ function SearchForActivitiesContent() {
         <Grid container spacing={4} justifyContent="space-evenly"></Grid>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-      {/* End footer */}
     </React.Fragment>
   );
 }

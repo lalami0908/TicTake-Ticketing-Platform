@@ -5,28 +5,16 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import SignUp from '../components/signUp-modal';
+import SignUp from '../components/login-modal';
 import Modal from '@mui/material/Modal';
-import { history } from '../index'
-import  { login } from '../axios/index'
-import View from '../assets/view.jpeg'
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '} {'tictake@'}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { login } from '../axios/index';
+import Copyright from '../components/copy-right-footer';
 
 const style = {
   position: 'absolute',
@@ -49,13 +37,13 @@ export default function SignInPpage() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-  
+
     const user = {
       email: data.get('email'),
       password: data.get('password'),
-    }
+    };
 
-    await login(user)
+    await login(user);
   };
 
   return (
@@ -71,7 +59,9 @@ export default function SignInPpage() {
             backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+              t.palette.mode === 'light'
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -93,11 +83,9 @@ export default function SignInPpage() {
               Sign in
             </Typography>
             <br></br>
-    
-       
- 
-            <Box component="form"  onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField 
+
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -107,8 +95,8 @@ export default function SignInPpage() {
                 autoComplete="email"
                 autoFocus
               />
-            <br></br>
-            <br></br>
+              <br></br>
+              <br></br>
               <TextField
                 margin="normal"
                 required
@@ -122,9 +110,9 @@ export default function SignInPpage() {
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-                style={{"paddingTop": "20px"}}
+                style={{ paddingTop: '20px' }}
               />
-              <Button 
+              <Button
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -132,12 +120,12 @@ export default function SignInPpage() {
                 size="large"
               >
                 Sign In
-              </Button >
+              </Button>
               <Grid container>
-                <Grid item>
-                 
-                </Grid>
-                <Button style= {{'marginLeft': '80px'}}onClick={handleOpen}>Don't have an account? Sign Up</Button>
+                <Grid item></Grid>
+                <Button style={{ marginLeft: '80px' }} onClick={handleOpen}>
+                  Don't have an account? Sign Up
+                </Button>
                 <Modal
                   open={open}
                   onClose={handleClose}
@@ -148,12 +136,10 @@ export default function SignInPpage() {
                     <SignUp handleClose={handleClose}></SignUp>
                   </Box>
                 </Modal>
-               
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
-          
         </Grid>
       </Grid>
     </ThemeProvider>

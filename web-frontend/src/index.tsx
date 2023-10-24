@@ -4,19 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { createBrowserHistory } from 'history'
-import { Router } from 'react-router-dom'
-const history = createBrowserHistory({forceRefresh:true})
+import { createBrowserHistory } from 'history';
+import { Router } from 'react-router-dom';
+const history = createBrowserHistory({ forceRefresh: true });
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root') as HTMLElement,
 );
 root.render(
   <React.StrictMode>
     <Router history={history}>
       <App />
     </Router>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
@@ -24,5 +24,4 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-
-export { history }
+export { history };

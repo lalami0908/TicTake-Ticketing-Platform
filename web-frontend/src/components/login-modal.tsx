@@ -10,22 +10,12 @@ import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import  { signUp } from '../axios/index'
-
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '} {'tictake@'}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { signUp } from '../axios/index';
+import Copyright from './copy-right-footer';
 
 const theme = createTheme();
 
-export default function SignUp( props: {handleClose: any}) {
+export default function SignUp(props: { handleClose: any }) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -34,16 +24,15 @@ export default function SignUp( props: {handleClose: any}) {
       password: data.get('password'),
       first_name: data.get('first_name'),
       last_name: data.get('last_name'),
-    }
-    event.stopPropagation()
-    await signUp(user)
-    props.handleClose()
+    };
+    event.stopPropagation();
+    await signUp(user);
+    props.handleClose();
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Container 
-        component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -54,8 +43,7 @@ export default function SignUp( props: {handleClose: any}) {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <EmojiPeopleIcon 
-             />
+            <EmojiPeopleIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -104,12 +92,6 @@ export default function SignUp( props: {handleClose: any}) {
                   autoComplete="new-password"
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -121,11 +103,13 @@ export default function SignUp( props: {handleClose: any}) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link  
-                  href="/login" onClick={() => window.location.reload()}
+                <Link
+                  href="/login"
+                  onClick={() => window.location.reload()}
                   variant="body2"
-                  style={{"textAlign": "center", "marginRight": "90px"}}>
-                    {"Already have an account? Sign in"}
+                  style={{ textAlign: 'center', marginRight: '90px' }}
+                >
+                  {'Already have an account? Sign in'}
                 </Link>
               </Grid>
             </Grid>
